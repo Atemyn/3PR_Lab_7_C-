@@ -15,7 +15,7 @@ int main()
 	cout << "Статические экземпляры: " << endl << endl;
 
 	firstStaticB.inputBuilding();
-	secondStaticB.initBuilding();
+	initBuilding(secondStaticB);
 
 	firstStaticB.addToBuilding(&secondStaticB);
 
@@ -32,7 +32,7 @@ int main()
 	cout << "Динамические экземпляры: " << endl << endl;
 
 	firstDynamicB->inputBuilding();
-	secondDynamicB->initBuilding();
+	initBuilding(*secondDynamicB);
 
 	firstDynamicB->addToBuilding(secondDynamicB);
 
@@ -51,7 +51,7 @@ int main()
 	cout << "Динамический массив объектов: " << endl << endl;
 
 	firstDynamicArray->inputBuilding();
-	(firstDynamicArray + 1)->initBuilding();
+	initBuilding(*(firstDynamicArray + 1));
 
 	firstDynamicArray->addToBuilding((firstDynamicArray + 1));
 
@@ -63,7 +63,7 @@ int main()
 		if (secondDynamicArray != NULL)
 		{
 			cout << "Четвертый элемент массива: " << endl;
-			(secondDynamicArray + 3)->initBuilding();
+			initBuilding(*(secondDynamicArray + 3));
 			(secondDynamicArray + 3)->getBuilding();
 		}
 	}
@@ -84,7 +84,7 @@ int main()
 	cout << "Массив динамических объектов: " << endl << endl;
 
 	firstArrayOfDyn[0]->inputBuilding();
-	secondArrayOfDyn[1]->initBuilding();
+	initBuilding(*secondArrayOfDyn[1]);
 
 	firstArrayOfDyn[0]->addToBuilding(secondArrayOfDyn[1]);
 
@@ -110,7 +110,7 @@ int main()
 	cout << "Возвращение значения из функции через указатель и через ссылку: " << endl;
 
 	b1.inputBuilding();
-	b2.initBuilding();
+	initBuilding(b2);
 	// Вызов первого метода через указатель.
 	b1.exchangeWindowsOnBuildings(&b2);
 
@@ -134,6 +134,13 @@ int main()
 	b1.inputBuilding();
 	b1.addToBuilding(&b1);
 	/*.................................................................*/
+
+	/* Использование дружественной классу Building функции initBuilding. */
+	cout << "Использование дружественной классу Building функции Init." << endl;
+	initBuilding(b1);
+	b1.getBuilding();
+	/*...................................................................*/
+
 	cin.get();
 	return 0;
 }

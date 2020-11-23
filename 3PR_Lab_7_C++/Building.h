@@ -44,10 +44,10 @@ public:
 		cout << "Коэффициент устойчивости: " << stabilityFactor << endl << endl;
 	}
 	/* Функция по заданию свойств по умолчанию экземпляра класса Building. */
-	void initBuilding()
+	friend void initBuilding(Building &building)
 	{
-		setBuiling(1.0, 1.0, 1.0, 1, 1.0);
-		facade.setFacade(0, 0);
+		building.setBuiling(1.0, 1.0, 1.0, 1, 1.0);
+		building.facade.setFacade(0, 0);
 	}
 	/* Функция по вводу с клавиатуры свойств для экземпляра класса Building */
 	void inputBuilding()
@@ -99,7 +99,7 @@ public:
 			else
 			{
 				cout << "Здание не смогло устоять и рухнуло!" << endl << endl << endl;
-				initBuilding();
+				initBuilding(*this);
 			}
 		}
 		else
@@ -139,7 +139,7 @@ public:
 		if (stabilityFactor < 1)
 		{
 			cout << "К сожалению, после совмещения двух зданий новое здание сразу же развалилось, так как его коэффициент устойчивости k = " << stabilityFactor << " меньше нуля." << endl << endl;
-			initBuilding();
+			initBuilding(*this);
 		}
 		else
 		{
@@ -248,5 +248,4 @@ public:
 
 		this->facade.setFacade(windows, opened);
 	}
-
 };
