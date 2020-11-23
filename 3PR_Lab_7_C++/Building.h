@@ -248,4 +248,64 @@ public:
 
 		this->facade.setFacade(windows, opened);
 	}
+
+	friend Building operator+(Building b1, Building b2)
+	{
+		Building resultB;
+
+		if (b1.sideLength > b2.sideLength)
+			resultB.sideLength = b1.sideLength;
+		else
+			resultB.sideLength = b2.sideLength;
+
+		if (b1.basementHeight > b2.basementHeight)
+			resultB.basementHeight = b1.basementHeight;
+		else
+			resultB.basementHeight = b2.basementHeight;
+
+		if (b1.floorHeight > b2.floorHeight)
+			resultB.floorHeight = b1.floorHeight;
+		else
+			resultB.floorHeight = b2.floorHeight;
+
+		resultB.floorAmount = b1.floorAmount + b2.floorAmount;
+
+		resultB.facade = b1.facade;
+		resultB.facade.addToFacade(b2.facade);
+		// Расчет нового коэффициента устойчивости и проверка его корректности.
+		resultB.stabilityFactor = (float)(resultB.sideLength * resultB.sideLength * sqrt(resultB.basementHeight)) / (resultB.floorHeight * resultB.floorAmount);
+
+		if (resultB.stabilityFactor < 1)
+		{
+			initBuilding(resultB);
+		}
+		return resultB;
+	}
+
+	friend Building& operator++(Building& building)
+	{
+		building.floorAmount++;
+
+		building.stabilityFactor = (float)(building.sideLength * building.sideLength * sqrt(building.basementHeight)) / (building.floorHeight * building.floorAmount);
+		if (building.stabilityFactor < 1)
+		{
+			initBuilding(building);
+		}
+
+		return building;
+	}
+
+	friend Building operator++(Building& building, int)
+	{
+		Building result(building);
+		building.floorAmount++;
+
+		building.stabilityFactor = (float)(building.sideLength * building.sideLength * sqrt(building.basementHeight)) / (building.floorHeight * building.floorAmount);
+		if (building.stabilityFactor < 1)
+		{
+			initBuilding(building);
+		}
+
+		return result;
+	}
 };
