@@ -17,7 +17,7 @@ int main()
 	firstStaticB.inputBuilding();
 	secondStaticB.initBuilding();
 
-	firstStaticB.addToBuilding(secondStaticB);
+	firstStaticB.addToBuilding(&secondStaticB);
 
 	firstStaticB.addFloors();
 	firstStaticB.removeFloors();
@@ -34,7 +34,7 @@ int main()
 	firstDynamicB->inputBuilding();
 	secondDynamicB->initBuilding();
 
-	firstDynamicB->addToBuilding(*secondDynamicB);
+	firstDynamicB->addToBuilding(secondDynamicB);
 
 	firstDynamicB->addFloors();
 	firstDynamicB->removeFloors();
@@ -53,7 +53,7 @@ int main()
 	firstDynamicArray->inputBuilding();
 	(firstDynamicArray + 1)->initBuilding();
 
-	firstDynamicArray->addToBuilding(*(firstDynamicArray + 1));
+	firstDynamicArray->addToBuilding((firstDynamicArray + 1));
 
 	// Аналог для выделения памяти по массив объектов.
 	secondDynamicArray = (Building*)calloc(amount, sizeof(Building));
@@ -86,7 +86,7 @@ int main()
 	firstArrayOfDyn[0]->inputBuilding();
 	secondArrayOfDyn[1]->initBuilding();
 
-	firstArrayOfDyn[0]->addToBuilding(*secondArrayOfDyn[1]);
+	firstArrayOfDyn[0]->addToBuilding(secondArrayOfDyn[1]);
 
 	for (int i = 0; i < 2; i++)
 	{
@@ -128,6 +128,12 @@ int main()
 	cout << "Второе здание после второго обмена:" << endl;
 	b2.getBuilding();
 	/*................................................................*/
+
+	/* Проверка условия с использованием this в функции addToBuilding. */
+	cout << "Проверка условия с использованием this в функции addToBuilding:" << endl;
+	b1.inputBuilding();
+	b1.addToBuilding(&b1);
+	/*.................................................................*/
 	cin.get();
 	return 0;
 }

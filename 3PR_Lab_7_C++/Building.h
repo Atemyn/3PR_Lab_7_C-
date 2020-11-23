@@ -108,27 +108,32 @@ public:
 		}
 	}
 	/* Функция по сложению двух экземпляров класса Building, где build - экземпляр, который будет прибавляться. */
-	void addToBuilding(Building build)
+	void addToBuilding(Building *build)
 	{
+		if (this == build)
+		{
+			cout << "Вы не можете сложить здание само с собой!" << endl;
+			return;
+		}
 		cout << "Совмещаем два здания... Их свойства такие:" << endl;
-		cout << "Длины сторон оснований: " << sideLength << " и " << build.sideLength << endl <<
-			"Высоты фундаментов: " << basementHeight << " и " << build.basementHeight << endl << "Высоты этажей: " << floorHeight << " и " << build.floorHeight << endl <<
-			"Количества этажей: " << floorAmount << " и " << build.floorAmount << endl << "Коэффициенты устойчивости: " << stabilityFactor << " и " << build.stabilityFactor << endl <<
-			"Общие количества окон: " << facade.getWindowsAmount() << " и " << build.facade.getWindowsAmount() << endl <<
-			"Количества открытых окон: " << facade.getOpenedWindowsAmount() << " и " << build.facade.getOpenedWindowsAmount() << endl << endl;
+		cout << "Длины сторон оснований: " << sideLength << " и " << build->sideLength << endl <<
+			"Высоты фундаментов: " << basementHeight << " и " << build->basementHeight << endl << "Высоты этажей: " << floorHeight << " и " << build->floorHeight << endl <<
+			"Количества этажей: " << floorAmount << " и " << build->floorAmount << endl << "Коэффициенты устойчивости: " << stabilityFactor << " и " << build->stabilityFactor << endl <<
+			"Общие количества окон: " << facade.getWindowsAmount() << " и " << build->facade.getWindowsAmount() << endl <<
+			"Количества открытых окон: " << facade.getOpenedWindowsAmount() << " и " << build->facade.getOpenedWindowsAmount() << endl << endl;
 
-		if (sideLength < build.sideLength)
-			sideLength = build.sideLength;
+		if (sideLength < build->sideLength)
+			sideLength = build->sideLength;
 
-		if (basementHeight < build.basementHeight)
-			basementHeight = build.basementHeight;
+		if (basementHeight < build->basementHeight)
+			basementHeight = build->basementHeight;
 
-		if (floorHeight < build.floorHeight)
-			floorHeight = build.floorHeight;
+		if (floorHeight < build->floorHeight)
+			floorHeight = build->floorHeight;
 
-		floorAmount = floorAmount + build.floorAmount;
+		floorAmount = floorAmount + build->floorAmount;
 
-		facade.addToFacade(build.facade);
+		facade.addToFacade(build->facade);
 		// Расчет нового коэффициента устойчивости и проверка его корректности.
 		stabilityFactor = (float)(sideLength * sideLength * sqrt(basementHeight)) / (floorHeight * floorAmount);
 		if (stabilityFactor < 1)
