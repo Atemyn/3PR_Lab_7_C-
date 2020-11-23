@@ -205,4 +205,43 @@ public:
 		getBuilding();
 	}
 
+	int getWindowsAmount()
+	{
+		return facade.getWindowsAmount();
+	}
+
+	int getOpenedWindowsAmount()
+	{
+		return facade.getOpenedWindowsAmount();
+	}
+
+	void setFacade(int windAmount, int opWindAmount)
+	{
+		facade.setFacade(windAmount, opWindAmount);
+	}
+
+	void exchangeWindowsOnBuildings(Building* building)
+	{
+		int windows, opened;
+
+		windows = building->getWindowsAmount();
+		opened = building->getOpenedWindowsAmount();
+
+		building->setFacade(this->getWindowsAmount(), this->getOpenedWindowsAmount());
+
+		this->facade.setFacade(windows, opened);
+	}
+
+	void exchangeWindowsOnBuildings(Building& building)
+	{
+		int windows, opened;
+
+		windows = building.getWindowsAmount();
+		opened = building.getOpenedWindowsAmount();
+
+		building.setFacade(this->getWindowsAmount(), this->getOpenedWindowsAmount());
+
+		this->facade.setFacade(windows, opened);
+	}
+
 };

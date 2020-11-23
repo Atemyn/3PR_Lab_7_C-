@@ -104,6 +104,30 @@ int main()
 	staticB.openWindowsOnFacade();
 	staticB.closeWindowsOnFacade();
 	/*..........................*/
+
+	/* Возвращение значения из функции через указатель и через ссылку. */
+	Building b1, b2;
+	cout << "Возвращение значения из функции через указатель и через ссылку: " << endl;
+
+	b1.inputBuilding();
+	b2.initBuilding();
+	// Вызов первого метода через указатель.
+	b1.exchangeWindowsOnBuildings(&b2);
+
+	cout << "Первое здание после первого обмена:" << endl;
+	b1.getBuilding();
+
+	cout << "Второе здание после первого обмена:" << endl;
+	b2.getBuilding();
+	// Вызов второго метода через ссылку.
+	b1.exchangeWindowsOnBuildings(b2);
+
+	cout << "Первое здание после второго обмена:" << endl;
+	b1.getBuilding();
+
+	cout << "Второе здание после второго обмена:" << endl;
+	b2.getBuilding();
+	/*................................................................*/
 	cin.get();
 	return 0;
 }
