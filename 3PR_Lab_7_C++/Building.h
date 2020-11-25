@@ -10,6 +10,8 @@ using namespace std;
 class Building
 {
 private:
+	// Тип здания.
+	string typeOfBuilding;
 	// Длина стороны основания.
 	float sideLength;
 	// Высота фундамента.
@@ -23,19 +25,21 @@ private:
 	// Коэффициент устойчивости.
 	float stabilityFactor;
 	/* Функция по установке переданных значений в свойства экземпляра класса Building. */
-	void setBuiling(float b_sideLength, float b_basementHeight, float b_floorHeight, unsigned b_floorAmount, float b_stabilityFactor)
+	void setBuiling(string typeOfBuilding, float sideLength, float basementHeight, float floorHeight, unsigned floorAmount, float stabilityFactor)
 	{
-		sideLength = b_sideLength;
-		basementHeight = b_basementHeight;
-		floorHeight = b_floorHeight;
-		floorAmount = b_floorAmount;
-		stabilityFactor = b_stabilityFactor;
+		this->typeOfBuilding = typeOfBuilding;
+		this->sideLength = sideLength;
+		this->basementHeight = basementHeight;
+		this->floorHeight = floorHeight;
+		this->floorAmount = floorAmount;
+		this->stabilityFactor = stabilityFactor;
 	}
 public:
 	/* Функция по выводу свойств экземпляра класса Building. */
 	void getBuilding()
 	{
 		cout << "Свойства данного здания:" << endl;
+		cout << "Тип здания: " << typeOfBuilding << endl;
 		cout << "Длина стороны основания: " << sideLength << endl;
 		cout << "Высота фундамента: " << basementHeight << endl;
 		cout << "Высота этажа: " << floorHeight << endl;
@@ -46,13 +50,18 @@ public:
 	/* Функция по заданию свойств по умолчанию экземпляра класса Building. */
 	friend void initBuilding(Building &building)
 	{
-		building.setBuiling(1.0, 1.0, 1.0, 1, 1.0);
+		building.setBuiling("Жилое здание", 1.0, 1.0, 1.0, 1, 1.0);
 		building.facade.setFacade(0, 0);
 	}
 	/* Функция по вводу с клавиатуры свойств для экземпляра класса Building */
 	void inputBuilding()
 	{
 		// Защиты от дурака для ввода всех необходимых данных.
+		cout << "Введите тип вашего здания (в виде строки): ";
+		cin >> typeOfBuilding;
+		cin.clear();
+		rewind(stdin);
+
 		cout << "Введите длину стороны вашего здания: ";
 		while (!(cin >> sideLength) || cin.get() != '\n' || sideLength <= 0)
 		{
@@ -116,11 +125,13 @@ public:
 			return;
 		}
 		cout << "Совмещаем два здания... Их свойства такие:" << endl;
-		cout << "Длины сторон оснований: " << sideLength << " и " << build->sideLength << endl <<
+		cout <<"Типы зданий: " << typeOfBuilding << " и " << build->typeOfBuilding << endl << "Длины сторон оснований: " << sideLength << " и " << build->sideLength << endl <<
 			"Высоты фундаментов: " << basementHeight << " и " << build->basementHeight << endl << "Высоты этажей: " << floorHeight << " и " << build->floorHeight << endl <<
 			"Количества этажей: " << floorAmount << " и " << build->floorAmount << endl << "Коэффициенты устойчивости: " << stabilityFactor << " и " << build->stabilityFactor << endl <<
 			"Общие количества окон: " << facade.getWindowsAmount() << " и " << build->facade.getWindowsAmount() << endl <<
 			"Количества открытых окон: " << facade.getOpenedWindowsAmount() << " и " << build->facade.getOpenedWindowsAmount() << endl << endl;
+
+		typeOfBuilding = typeOfBuilding + " " + build->typeOfBuilding;
 
 		if (sideLength < build->sideLength)
 			sideLength = build->sideLength;
@@ -252,6 +263,8 @@ public:
 	friend Building operator+(Building b1, Building b2)
 	{
 		Building resultB;
+
+		b1.typeOfBuilding = b1.typeOfBuilding + " " + b2.typeOfBuilding;
 
 		if (b1.sideLength > b2.sideLength)
 			resultB.sideLength = b1.sideLength;
