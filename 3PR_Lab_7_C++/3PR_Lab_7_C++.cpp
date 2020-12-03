@@ -25,9 +25,7 @@ int main()
 
 	/* Работа с динамическими экземплярами класса. */
 	Building* firstDynamicB = new Building;
-	Building* secondDynamicB;
-	// Выделение памяти через malloc.
-	secondDynamicB = (Building*)malloc(sizeof(Building));
+	Building* secondDynamicB = new Building;
 
 	cout << "Динамические экземпляры: " << endl << endl;
 
@@ -38,15 +36,14 @@ int main()
 
 	firstDynamicB->addFloors();
 	firstDynamicB->removeFloors();
-	// Очистка памяти двумя разными способами.
+	// Очистка памяти.
 	delete firstDynamicB;
-	free(secondDynamicB);
+	delete secondDynamicB;
 	/*............................................*/
 
 	/* Динамический массив объектов. */
 	int amount = 2;
 	Building* firstDynamicArray = new Building[amount];
-	Building* secondDynamicArray;
 
 	cout << "Динамический массив объектов: " << endl << endl;
 
@@ -54,45 +51,29 @@ int main()
 	initBuilding(*(firstDynamicArray + 1));
 
 	firstDynamicArray->addToBuilding((firstDynamicArray + 1));
-
-	// Аналог для выделения памяти по массив объектов.
-	secondDynamicArray = (Building*)calloc(amount, sizeof(Building));
-	if (secondDynamicArray != NULL)
-	{
-		secondDynamicArray = (Building*)realloc(secondDynamicArray, (amount + 2) * sizeof(Building));
-		if (secondDynamicArray != NULL)
-		{
-			cout << "Четвертый элемент массива: " << endl;
-			initBuilding(*(secondDynamicArray + 3));
-			(secondDynamicArray + 3)->getBuilding();
-		}
-	}
-	// Очистка памяти двумя разными способами.
+	// Очистка памяти.
 	delete[] firstDynamicArray;
-	free(secondDynamicArray);
 	/*...............................*/
 
 	/* Массив динамических объектов. */
-	Building* firstArrayOfDyn[2], * secondArrayOfDyn[2];
+	Building* firstArrayOfDyn[2];
 	for (int i = 0; i < 2; i++)
 	{
 		// Выделение памяти двумя разными способами.
 		firstArrayOfDyn[i] = new Building;
-		secondArrayOfDyn[i] = (Building*)malloc(sizeof(Building));
 	}
 
 	cout << "Массив динамических объектов: " << endl << endl;
 
 	firstArrayOfDyn[0]->inputBuilding();
-	initBuilding(*secondArrayOfDyn[1]);
+	initBuilding(*firstArrayOfDyn[1]);
 
-	firstArrayOfDyn[0]->addToBuilding(secondArrayOfDyn[1]);
+	firstArrayOfDyn[0]->addToBuilding(firstArrayOfDyn[1]);
 
 	for (int i = 0; i < 2; i++)
 	{
 		// Очистка памяти двумя разными способами.
 		delete firstArrayOfDyn[i];
-		free(secondArrayOfDyn[i]);
 	}
 	/*..............................*/
 	/* Новые функции Ассоциации. */
